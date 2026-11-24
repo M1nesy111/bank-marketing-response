@@ -1,0 +1,69 @@
+# 银行电话营销响应预测
+
+用历史客户数据训练模型，预测「哪位客户更可能认购定期存款」，从而把外呼名单缩短、降低营销成本。
+
+## 数据从哪来
+
+UCI Machine Learning Repository — Bank Marketing 数据集（公开、可复现）
+
+- 文件：`data/bank-additional-full.csv`
+- 规模：41,188 行 × 21 列
+- 目标列：`y` —— 客户是否认购定期存款（yes / no）
+- 认购率约 11.3%（4,640 / 41,188）
+
+## 文件夹说明
+
+```
+data/        数据文件（原始 CSV + 字段说明）
+notebooks/   分析笔记（Jupyter）
+src/         可复用的 Python 脚本
+figures/     画出来的图
+```
+
+## 怎么运行
+
+1. 打开 Anaconda Prompt
+2. 进入项目目录：
+   ```
+   cd "D:\DeepSeek Harness工作区\1\bank-marketing-response"
+   ```
+3. 启动 Jupyter：
+   ```
+   jupyter notebook
+   ```
+4. 打开 `notebooks/01_认识数据.ipynb`，从上到下依次运行
+
+## 字段说明
+
+| 字段 | 中文含义 |
+|---|---|
+| age | 年龄 |
+| job | 职业 |
+| marital | 婚姻状况 |
+| education | 学历 |
+| default | 是否有违约记录 |
+| housing | 是否有房贷 |
+| loan | 是否有个人贷款 |
+| contact | 联系方式（电话/手机） |
+| month | 最后一次联系的月份 |
+| day_of_week | 最后一次联系的星期 |
+| duration | 最后一次通话时长（秒） |
+| campaign | 本次营销活动中联系过几次 |
+| pdays | 距离上次联系过了多少天（999 = 没联系过） |
+| previous | 之前联系过几次 |
+| poutcome | 之前的营销结果 |
+| emp.var.rate | 就业变化率（经济指标） |
+| cons.price.idx | 消费者价格指数 |
+| cons.conf.idx | 消费者信心指数 |
+| euribor3m | 欧元区 3 个月利率 |
+| nr.employed | 就业人数（千人） |
+| y | **是否认购（目标）** |
+
+## 进度
+
+- [x] 环境搭建、数据下载
+- [ ] 认识数据（看行列、看认购率）
+- [ ] 画 3 张图
+- [ ] 逻辑回归基线
+- [ ] 调参、算提升度
+- [ ] 做成网页、打包
