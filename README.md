@@ -4,12 +4,22 @@
 
 ## 数据从哪来
 
-UCI Machine Learning Repository — Bank Marketing 数据集（公开、可复现）
+UCI Machine Learning Repository — **Bank Marketing** 数据集（编号 222，公开、可复现）
 
+- 数据来源：一家葡萄牙银行的真实电话营销记录，时间跨度 2008 年 5 月 — 2010 年 11 月
 - 文件：`data/bank-additional-full.csv`
 - 规模：41,188 行 × 21 列
 - 目标列：`y` —— 客户是否认购定期存款（yes / no）
 - 认购率约 11.3%（4,640 / 41,188）
+- 许可：CC BY 4.0（可自由使用，需注明来源）
+
+**官方页面**：https://archive.ics.uci.edu/dataset/222/bank+marketing
+
+**引用**：
+
+> Moro, S., Rita, P., & Cortez, P. (2014). Bank Marketing [Dataset]. UCI Machine Learning Repository. https://doi.org/10.24432/C5K306
+
+**注意**：这是葡萄牙数据，经济变量为欧元区利率，不是中国银行数据。本项目验证的是「客户响应预测」的方法论，换数据源同样适用。
 
 ## 文件夹说明
 
