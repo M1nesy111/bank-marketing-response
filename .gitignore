@@ -6,3 +6,4 @@ Thumbs.db
 *.zip
 data/*.zip
 models/
+src/_reference/
