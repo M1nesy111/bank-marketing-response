@@ -118,3 +118,52 @@ figures/     画出来的图
 1. **特征泄漏**：`duration` 是通话结束后才产生的变量，而营销名单在通话前就要确定，必须剔除。
 2. **标准化顺序**：先切分训练/测试集，再在训练集上 fit 标准化参数；测试集只 transform，不能重新 fit。
 3. **训练与预测同源**：模型用标准化后的数据训练，预测时若喂原始数据，输出会全部饱和为 1，AUC 直接掉到 0.5。
+
+## 在线预测接口（FastAPI）
+
+把模型包装成 HTTP 服务：输入客户信息，返回认购概率与营销建议。
+
+### 启动
+
+```
+python src/train.py                          # 首次运行，生成模型文件到 models/
+python -m uvicorn src.app:app --reload       # 启动服务
+```
+
+浏览器打开 **http://127.0.0.1:8000/docs**，可以在页面上直接点「Try it out」测试接口。
+
+### 接口
+
+| 方法 | 路径 | 说明 |
+|---|---|---|
+| GET | `/` | 健康检查 |
+| POST | `/predict` | 输入一个客户信息，返回认购概率、等级与建议 |
+
+### 请求示例
+
+```json
+{
+  "age": 35, "job": "admin.", "marital": "married", "education": "university.degree",
+  "default": "no", "housing": "yes", "loan": "no", "contact": "cellular",
+  "month": "may", "day_of_week": "mon", "campaign": 2, "pdays": 999,
+  "previous": 0, "poutcome": "nonexistent",
+  "emp.var.rate": 1.1, "cons.price.idx": 93.994, "cons.conf.idx": -36.4,
+  "euribor3m": 4.857, "nr.employed": 5191.0
+}
+```
+
+### 响应示例
+
+```json
+{"probability": 0.0649, "level": "低", "suggestion": "建议暂缓拨打"}
+```
+
+### 工程结构
+
+```
+src/train.py      一键训练并保存模型产物（model.pkl / scaler.pkl / columns.pkl）
+src/predict.py    预测逻辑：原始字段 → 特征对齐 → 标准化 → 概率
+src/app.py        FastAPI 服务（含字段校验与业务阈值）
+```
+
+**关键点**：线上预测必须复现训练时的预处理流程（删列 → 独热编码 → 按训练列名对齐 → 标准化），否则模型输出会失真。`predict.py` 里的 `reindex(columns=..., fill_value=0)` 就是用来保证列对齐的。
